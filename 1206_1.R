@@ -73,8 +73,8 @@ NTU_info = function () {
   result
   
 }
-
 NTU_info()
+
 
 #利用套件執行
 library(rvest)
@@ -84,3 +84,18 @@ website = read_html(URL)
 #「html_text」能幫助我們把標籤通通去掉
 needed_txt = website %>% html_nodes("tr") %>% html_text()
 needed_txt
+
+
+#擷取網站資訊
+URL = "https://www.ptt.cc/bbs/AllTogether/index3245.html"
+website = read_html(URL)
+needed_html = website %>% html_nodes("a")
+needed_html
+#只擷取字
+needed_txt = needed_html %>% html_text()
+needed_txt
+#只找"徵女"
+intrested_pos = grep("[徵女]", needed_txt, fixed = TRUE)
+needed_txt[intrested_pos]
+#尋找某文章連結，文章連結藏在needed_html裡面
+needed_link = needed_html[intrested_pos] %>% html_attr("href")
