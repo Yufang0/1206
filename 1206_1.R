@@ -166,3 +166,21 @@ for (i in 1:nrow(my_table)) {
 }
 
 my_table
+
+
+#訪問八卦版(會有詢問滿18歲的部分，要特別讓電腦處理)
+URL = 'https://www.ptt.cc/bbs/Gossiping/index.html'
+website = read_html(URL)
+website
+
+#over18=1 表示我已滿18，請電腦幫忙打勾
+library(RCurl)
+URL = 'https://www.ptt.cc/bbs/Gossiping/index.html'
+curl = getCurlHandle()
+curlSetOpt(cookie = "over18=1", followlocation = TRUE, curl = curl)
+#擷取資訊
+html_character = getURL(URL, curl = curl)
+website = read_html(html_character)
+needed_html = website %>% html_nodes("a")
+needed_txt = needed_html %>% html_text()
+needed_txt
