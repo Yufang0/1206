@@ -42,7 +42,7 @@ sub_txt = gsub(' ', '', sub_txt)
 sub_txt
 
 
-#P01寫出一個函數讓我能隨時知道臺大醫院的急診即時訊息
+#P01自訂函數抓臺大醫院的急診即時訊息
 NTU_info = function () {
   
   result = data.frame(item = c('等候掛號人數', '等候看診人數', '等候住院人數', '等候ICU人數', '等候推床人數'),
@@ -75,3 +75,12 @@ NTU_info = function () {
 }
 
 NTU_info()
+
+#利用套件執行
+library(rvest)
+URL = "https://reg.ntuh.gov.tw/EmgInfoBoard/NTUHEmgInfo.aspx"
+website = read_html(URL)
+#「html_nodes」能幫助我們把某種標籤的文字萃取出來
+#「html_text」能幫助我們把標籤通通去掉
+needed_txt = website %>% html_nodes("tr") %>% html_text()
+needed_txt
