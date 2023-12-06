@@ -99,3 +99,13 @@ intrested_pos = grep("[徵女]", needed_txt, fixed = TRUE)
 needed_txt[intrested_pos]
 #尋找某文章連結，文章連結藏在needed_html裡面
 needed_link = needed_html[intrested_pos] %>% html_attr("href")
+
+
+#知道其中一篇文章的基本資料
+#讀取
+i = 1
+sub_link = paste("https://www.ptt.cc", needed_link[i], sep = "")
+sub_website = read_html(sub_link) 
+#擷取
+article_info = sub_website %>% html_nodes(".article-meta-value")
+article_info
